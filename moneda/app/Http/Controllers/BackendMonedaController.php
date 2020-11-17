@@ -10,8 +10,8 @@ class BackendMonedaController extends Controller
      public function index()
     {
         $array= [
-            'openTicket' => 'menu-open',
-            'viewOpenTicket' => 'active'
+            'openMoneda' => 'menu-open',
+            'viewOpenMoneda' => 'active'
             ];
         
         $monedas = Moneda::all();
@@ -34,9 +34,6 @@ class BackendMonedaController extends Controller
     
     public function update(Request $request, Moneda $moneda)
     {
-        //puede llegar un archivo
-        //$this->uploadFile($request);
-        
         try{
             $result = $moneda->update($request->all());    
         }catch(\Exception $e){
@@ -45,7 +42,12 @@ class BackendMonedaController extends Controller
         
 
         if($result){
-            $response = ['op' => 'update', 'result' => $result, 'id' => $moneda->id];
+            $response = [
+                        'op' => 'update',
+                        'result' => $result,
+                        'id' => $moneda->id,
+                        'name' => $moneda->name,
+                ];
             return redirect('backend/moneda')->with($response);
         } else {
             return back()->withInput()->with(['error' => 'algo ha fallado']);
@@ -76,7 +78,12 @@ class BackendMonedaController extends Controller
         if($moneda->id > 0){
 
             $result = $moneda->save();
-            $response = ['op' => 'create', 'result' => $result, 'id' => $moneda->id];
+            $response = [
+                'op' => 'create',
+                'result' => $result,
+                'id' => $moneda->id,
+                'name' => $moneda->name,
+                ];
             return redirect('backend/moneda')->with($response);
         } else {
             return back()->withInput()->with(['error' => 'algo ha fallado']);
@@ -93,8 +100,13 @@ class BackendMonedaController extends Controller
             $result = 0;
         }
         
-        $response = ['op' => 'destroy', 'result' => $result, 'id' => $moneda->id];
-        return redirect('backend/enterprise')->with($response);
+        $response = [
+            'op' => 'destroy',
+            'result' => $result,
+            'id' => $moneda->id,
+            'name' => $moneda->name
+            ];
+        return redirect('backend/moneda')->with($response);
     }
     
 }

@@ -5,11 +5,28 @@
 @endsection
 
 @section('content')
-
+<!--  destroy, create, update-->
     @if(session()->has('op'))
-        <div class="aler alert-success" roler="alert">
-            Operacion: {{ session()->get('op')}}. id: {{ session()->get('id') }}. resultado: {{ session()->get('resultado') }}
-        </div>
+    
+        @if(session()->get('op') == 'create')
+            <div class="alert alert-primary" roler="alert">
+               The coin: {{ session()->get('name')}} has been CREATED successfully
+            </div>
+        @endif
+        
+        @if(session()->get('op') == 'update')
+            <div class="alert alert-success" roler="alert">
+                The coin: {{ session()->get('name')}} has been EDITED successfully
+            </div>
+        @endif
+        
+        @if(session()->get('op') == 'destroy')
+            <div class="alert alert-danger" roler="alert">
+                The coin: {{ session()->get('name')}} has been DELETED successfully
+            </div>
+        @endif
+    
+        
     @endif
     
 <div class="row">
